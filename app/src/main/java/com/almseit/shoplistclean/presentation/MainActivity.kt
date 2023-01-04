@@ -1,9 +1,11 @@
 package com.almseit.shoplistclean.presentation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.lifecycle.Observer
@@ -12,11 +14,13 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.almseit.shoplistclean.R
 import com.almseit.shoplistclean.domain.ShopItem
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var shopListAdapter: ShopListAdapter
+    private lateinit var floatButton:FloatingActionButton
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +29,14 @@ class MainActivity : AppCompatActivity() {
         setupRecycler()
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.shopList.observe(this, Observer {
-            //Log.d("MainActivity",it.toString())
             shopListAdapter.shopList = it
 
         })
+        floatButton = findViewById(R.id.btAddShopItem)
+        floatButton.setOnClickListener {
+            val intent = ShopItemActivity.newIntentAddItem(this)
+            startActivity(intent)
+        }
 
 
 
@@ -69,7 +77,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun onClickListener() {
         shopListAdapter.onShopItemClickListener = {
-            Log.d("MainActivity", it.toString())
+            val intent = ShopItemActivity.newIntentEditItem(this,it.id)
+            startActivity(intent)
         }
     }
 

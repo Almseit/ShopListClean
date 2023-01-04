@@ -2,4 +2,6 @@
     <string name="app_name">ShopListClean</string>
 
     <string name="add_new_shopItem">Add new shop item</string>
+    <string name="error_input_name">Invalid name</string>
+    <string name="error_input_count">Invalid count</string>
 </resources>

@@ -1,6 +1,6 @@
 package com.almseit.shoplistclean.presentation
 
-import androidx.lifecycle.MutableLiveData
+
 import androidx.lifecycle.ViewModel
 import com.almseit.shoplistclean.data.ShopListRepositoryImpl
 import com.almseit.shoplistclean.domain.*
