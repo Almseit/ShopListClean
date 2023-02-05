@@ -3,12 +3,12 @@ package com.almseit.shoplistclean.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.almseit.shoplistclean.R
+import com.almseit.shoplistclean.databinding.ActivityMainBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
@@ -16,21 +16,21 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var shopListAdapter: ShopListAdapter
     private lateinit var floatButton:FloatingActionButton
-    private var shopItemContainer:FragmentContainerView? = null
+    private lateinit var binding: ActivityMainBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        shopItemContainer = findViewById(R.id.shopItemContainer)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupRecycler()
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.shopList.observe(this, Observer {
             shopListAdapter.shopList = it
 
         })
-        floatButton = findViewById(R.id.btAddShopItem)
-        floatButton.setOnClickListener {
+
+        binding.btAddShopItem.setOnClickListener {
             if (isOnePaneMode()){
                 val intent = ShopItemActivity.newIntentAddItem(this)
                 startActivity(intent)
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isOnePaneMode():Boolean{
-        return shopItemContainer == null
+        return binding.shopItemContainer == null
     }
 
     private fun launchFragment(fragment: Fragment){
@@ -54,14 +54,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecycler(){
-        val rvShopList = findViewById<RecyclerView>(R.id.rvShopList)
+
         shopListAdapter = ShopListAdapter()
-        rvShopList.adapter = shopListAdapter
-        rvShopList.recycledViewPool.setMaxRecycledViews(ShopListAdapter.VIEW_TYPE_ENABLED,ShopListAdapter.MAX_POOL_SIZE)
-        rvShopList.recycledViewPool.setMaxRecycledViews(ShopListAdapter.VIEW_TYPE_DISABLED,ShopListAdapter.MAX_POOL_SIZE)
+        binding.rvShopList.adapter = shopListAdapter
+        binding.rvShopList.recycledViewPool.setMaxRecycledViews(ShopListAdapter.VIEW_TYPE_ENABLED,ShopListAdapter.MAX_POOL_SIZE)
+        binding.rvShopList.recycledViewPool.setMaxRecycledViews(ShopListAdapter.VIEW_TYPE_DISABLED,ShopListAdapter.MAX_POOL_SIZE)
         onLongClickListener()
         onClickListener()
-        setupSwipeListener(rvShopList)
+        setupSwipeListener(binding.rvShopList)
 
     }
 
