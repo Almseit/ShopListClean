@@ -6,13 +6,11 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.almseit.shoplistclean.R
 import com.almseit.shoplistclean.databinding.FragmentShopItemBinding
 import com.almseit.shoplistclean.domain.ShopItem
 
-class ShopItemFragment : Fragment() {
+class ShopItemFragment : androidx.fragment.app.Fragment() {
 
     private lateinit var viewModel: ShopItemViewModel
 
